@@ -3,5 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Fernando Angiolin Vidal <fernandoangiolin.contato@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "start": ""
+  },
+  "devDependencies": {
+    "@types/module-alias": "^2.0.1",
+    "@types/node": "^18.15.11",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  }
 }
