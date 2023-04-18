@@ -57,3 +57,4 @@ Converte os imports para required ao compilar.
 
 ## Command Pattern
 ## Factory Method
+## Intersection Types
