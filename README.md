@@ -56,3 +56,4 @@ Converte os imports para required ao compilar.
 ## ES Module
 
 ## Command Pattern
+## Factory Method
