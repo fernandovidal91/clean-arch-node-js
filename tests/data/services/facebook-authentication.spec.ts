@@ -24,7 +24,7 @@ describe('FacebookAuthenticationService', () => {
   let sut: FacebookAuthenticationService;
   const params = { token: 'any_token' };
 
-  beforeEach(() => {
+  beforeAll(() => {
     facebookApi = mock();
     userAccountRepository = mock();
     crypto = mock();
@@ -38,6 +38,9 @@ describe('FacebookAuthenticationService', () => {
       facebookId: 'any_facebook_id',
     });
     crypto.generateToken.mockResolvedValue('any_generated_token');
+  });
+
+  beforeEach(() => {
     sut = new FacebookAuthenticationService(facebookApi, userAccountRepository, crypto);
   });
 
