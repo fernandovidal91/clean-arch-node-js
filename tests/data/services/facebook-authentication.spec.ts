@@ -5,6 +5,16 @@ import { AuthenticationError } from "@/domain/errors";
 import { LoadFacebookUserApi } from '@/data/contracts/apis';
 import { SaveFacebookAccountRepository, LoadUserAccountRepository } from '@/data/contracts/repositories';
 
+jest.mock('@/domain/model/facebook-account', () => {
+  return {
+    FacebookAccount: jest.fn().mockImplementation(() => {
+      return {
+        any: 'any'
+      }
+    }),
+  }
+})
+
 describe('FacebookAuthenticationService', () => {
   let facebookApi: MockProxy<LoadFacebookUserApi>;
   let userAccountRepository: MockProxy<LoadUserAccountRepository & SaveFacebookAccountRepository>;
@@ -41,42 +51,11 @@ describe('FacebookAuthenticationService', () => {
     expect(userAccountRepository.load).toHaveBeenCalledTimes(1);
   });
 
-  it('Should call SaveFacebookAccountRepository when LoadUserAccountRepository returns undefined', async () => {
+  it('Should call SaveFacebookAccountRepository with FacebookAccount', async () => {
     await sut.perform(params);
     expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledWith({
-      name: 'any_facebook_name',
-      email: 'any_facebook_email',
-      facebookId: 'any_facebook_id'
-    })
-    expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledTimes(1);
-  });
-
-  it('Should call SaveFacebookAccountRepository when LoadUserAccountRepository returns undefined', async () => {
-    userAccountRepository.load.mockResolvedValueOnce({
-      id: 'any_id',
-      name: 'any_name'
+      any: 'any',
     });
-    await sut.perform(params);
-    expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledWith({
-      id: 'any_id',
-      name: 'any_name',
-      email: 'any_facebook_email',
-      facebookId: 'any_facebook_id'
-    })
-    expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledTimes(1);
-  });
-
-  it('Should update account name', async () => {
-    userAccountRepository.load.mockResolvedValueOnce({
-      id: 'any_id',
-    });
-    await sut.perform(params);
-    expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledWith({
-      id: 'any_id',
-      name: 'any_facebook_name',
-      email: 'any_facebook_email',
-      facebookId: 'any_facebook_id'
-    })
     expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledTimes(1);
   });
 });
