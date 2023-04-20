@@ -2,7 +2,7 @@ import { AccessToken } from "@/domain/model";
 import { AuthenticationError } from "@/domain/errors";
 
 export interface FacebookAuthentication {
-  perform: (params: FacebookAuthentication.Params) => Promise<FacebookAuthentication.Result>;
+  execute: (params: FacebookAuthentication.Params) => Promise<FacebookAuthentication.Result>;
 }
 
 export namespace FacebookAuthentication {

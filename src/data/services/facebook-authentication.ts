@@ -12,7 +12,7 @@ export class FacebookAuthenticationService implements FacebookAuthentication {
     private readonly crypto: TokenGenerator,
   ) {}
 
-  async perform(params: FacebookAuthentication.Params): Promise<FacebookAuthentication.Result> {
+  async execute(params: FacebookAuthentication.Params): Promise<FacebookAuthentication.Result> {
     const facebookData = await this.facebookApi.loadUser(params);
 
     if (facebookData) {
