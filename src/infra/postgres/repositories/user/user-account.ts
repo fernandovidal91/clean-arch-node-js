@@ -4,14 +4,9 @@ import { PgUser } from "@/infra/postgres/entities";
 import { Repository, getRepository } from "typeorm";
 
 export class PgUserAccountRepository implements LoadUserAccountRepository, SaveFacebookAccountRepository {
-  private readonly repository: Repository<PgUser>;
-
-  constructor() {
-    this.repository = getRepository(PgUser);
-  }
-
   async load(params: LoadUserAccountRepository.Params): Promise<LoadUserAccountRepository.Result> {
-    const pgUser = await this.repository.findOne({ email: params.email });
+    const repository = getRepository(PgUser);
+    const pgUser = await repository.findOne({ email: params.email });
     if (pgUser) {
       return {
         id: pgUser.id.toString(),
@@ -22,10 +17,12 @@ export class PgUserAccountRepository implements LoadUserAccountRepository, SaveF
   }
 
   async saveWithFacebook(params: SaveFacebookAccountRepository.Params): Promise<SaveFacebookAccountRepository.Result> {
+    const repository = getRepository(PgUser);
+
     let id: string;
 
     if (!params.id) {
-      const pgUser = await this.repository.save({
+      const pgUser = await repository.save({
         email: params.email,
         name: params.name,
         facebookId: params.facebookId,
@@ -35,7 +32,7 @@ export class PgUserAccountRepository implements LoadUserAccountRepository, SaveF
     } else {
       id = params.id;
 
-      await this.repository.update({
+      await repository.update({
         id: parseInt(params.id)
       }, {
         name: params.name,
