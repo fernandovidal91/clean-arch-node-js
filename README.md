@@ -91,3 +91,7 @@ Entidade = FacebookAccount
 Definido que se o usuário não tiver nome ela atualizada se não não atualiza. Essa regra pertence a conta do facebook.
 Está regra não muda se mudar o contexto.
 Contexto é o caso de uso que é o login com facebook
+
+A pasta models ou entities que contem o arquivo facebook-account.ts é a entidade.
+
+value-object <-> DDD -> è um objeto que não tem identidade, ele não muda o estado dele, oque o representa é o seu valor (nos parametros dessa classe). Arquito access-token.ts na pasta models ou entities.
