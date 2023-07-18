@@ -13,5 +13,7 @@ createConnection(config)
       console.log('Server is runing!!!');
     })
   })
-  .catch(console.error);
+  .catch((err) => (
+    console.log(err)
+  ));
 

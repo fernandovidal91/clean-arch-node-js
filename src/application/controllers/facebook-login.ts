@@ -14,7 +14,7 @@ export class FacebookLoginController extends Controller {
   async perform(httpRequest: HttpRequest): Promise<HttpResponse<Model>> {
     try {
       const accessToken = await this.facebookAuthentication({ token: httpRequest.token });
-    return ok(accessToken)
+      return ok(accessToken)
     } catch {
       return unauthorized();
     }

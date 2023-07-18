@@ -1,5 +1,5 @@
 import { AuthenticationError } from "@/domain/entities/errors";
-import { SaveFacebookAccountRepository, LoadUserAccountRepository } from "../contracts/repositories";
+import { SaveFacebookAccountRepository, LoadUserAccountRepository } from "@/domain/contracts/repositories";
 import { AccessToken, FacebookAccount } from "@/domain/entities";
 import { TokenGenerator } from "@/domain/contracts/crypto";
 import { LoadFacebookUserApi } from "@/domain/contracts/apis";
@@ -20,7 +20,7 @@ export const setupFacebookAuthentication: Setup = (facebookApi, userAccountRepos
     const facebookAccount = new FacebookAccount(facebookData, accountData);
     const { id } = await userAccountRepository.saveWithFacebook(facebookAccount);
     const accessToken = await crypto.generateToken({ key: id, expirationInMs: AccessToken.expirationInMs });
-    return { accessToken }
+    return { accessToken };
   }
 
   throw new AuthenticationError();
