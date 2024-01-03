@@ -17,7 +17,7 @@ describe('ExpressMiddleware', () => {
     res = getMockRes().res
     next = getMockRes().next
     middleware = mock<Middleware>()
-    middleware.handler.mockResolvedValue({
+    middleware.handle.mockResolvedValue({
       statusCode: 200,
       data: {
         emptyProp: '',
@@ -32,21 +32,21 @@ describe('ExpressMiddleware', () => {
     sut = adaptExpressMiddleware(middleware)
   })
 
-  it ('Should call handler with correct request', async () => {
+  it ('Should call handle with correct request', async () => {
     await sut(req, res, next)
-    expect(middleware.handler).toHaveBeenCalledTimes(1)
-    expect(middleware.handler).toHaveBeenCalledWith({any: 'any'})
+    expect(middleware.handle).toHaveBeenCalledTimes(1)
+    expect(middleware.handle).toHaveBeenCalledWith({any: 'any'})
   })
 
-  it ('Should call handler with empty request', async () => {
+  it ('Should call handle with empty request', async () => {
     req = getMockReq()
     await sut(req, res, next)
-    expect(middleware.handler).toHaveBeenCalledTimes(1)
-    expect(middleware.handler).toHaveBeenCalledWith({})
+    expect(middleware.handle).toHaveBeenCalledTimes(1)
+    expect(middleware.handle).toHaveBeenCalledWith({})
   })
 
-  it('Should respond with correct error and status code', async () => {
-    middleware.handler.mockResolvedValueOnce({ statusCode: 500, data: { error: 'any_error' } })
+  it('Should respond with correct error and statusCode', async () => {
+    middleware.handle.mockResolvedValueOnce({ statusCode: 500, data: new Error('any_error') })
     await sut(req, res, next)
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.status).toHaveBeenCalledTimes(1)
